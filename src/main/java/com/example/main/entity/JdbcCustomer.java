@@ -4,6 +4,8 @@ import java.time.LocalDate;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.Pattern;
 
 
 @Entity
@@ -14,10 +16,12 @@ public class JdbcCustomer {
 
 	private String fullName;
 
+	@Email
 	private String email;
 
 	private LocalDate birthDate;
 
+	@Pattern(regexp = "^[MF]$",message = "Invalid gender")
 	private String gender;
 
 

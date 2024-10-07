@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/sqlinjection/danger/v1")
-
+@Validated
 public class JdbcCustomerDangerApi {
 
     @Autowired
@@ -40,7 +40,7 @@ public class JdbcCustomerDangerApi {
     }
 
     @PostMapping(value = "/customer")
-    public void createCustomer(@RequestBody(required = true) JdbcCustomer newCustomer) {
+    public void createCustomer(@RequestBody(required = true) @Valid JdbcCustomer newCustomer) {
         repository.createCustomer(newCustomer);
     }
 
