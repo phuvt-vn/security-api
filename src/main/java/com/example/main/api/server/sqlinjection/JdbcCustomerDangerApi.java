@@ -1,9 +1,8 @@
-package com.example.main.api.server;
+package com.example.main.api.server.sqlinjection;
 
 import java.util.List;
 
 import javax.validation.Valid;
-import javax.validation.constraints.Pattern;
 
 import com.example.main.api.request.sqlinjection.JdbcCustomerPatchRequest;
 import com.example.main.entity.JdbcCustomer;

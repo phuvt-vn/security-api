@@ -1,4 +1,4 @@
-package com.example.main.api.server;
+package com.example.main.api.server.sqlinjection;
 
 import java.util.List;
 
