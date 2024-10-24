@@ -4,6 +4,7 @@ import java.util.List;
 
 public class HexColorPaginationResponse {
 
+
 	private int currentPage;
 
 	private int size;

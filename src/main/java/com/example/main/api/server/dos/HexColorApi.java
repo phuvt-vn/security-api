@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("api/dos/v1")
+
 @Validated
 public class HexColorApi {
 
@@ -44,6 +45,7 @@ public class HexColorApi {
 	public List<HexColor> randomColors() {
 		return hexColors;
 	}
+
 
 	@GetMapping(value = "/random-colors-pagination", produces = MediaType.APPLICATION_JSON_VALUE)
 	// use 1-based for easier
