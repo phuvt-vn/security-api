@@ -4,6 +4,7 @@ import com.example.main.api.response.xss.XssArticleSearchResponse;
 import com.example.main.entity.XssArticle;
 import com.example.main.repository.XssArticleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,23 +13,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-
-
 @RestController
-@RequestMapping("/api/xss/danger/v1/article")
+@RequestMapping("/api/xss/safe/v1/article")
 @CrossOrigin(origins = "http://localhost:3000")
-public class XssArticleDangerApi {
+public class XssArticleSafeApi {
 
 	@Autowired
 	private XssArticleRepository repository;
 
-	@PostMapping(value = "")
+	@PostMapping(value = "", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.TEXT_MARKDOWN_VALUE)
 	public String create(@RequestBody(required = true) XssArticle article) {
 		var savedArticleId = repository.save(article).getArticleId();
 		return Long.toString(savedArticleId);
 	}
 
-	@GetMapping(value = "")
+	@GetMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
 	public XssArticleSearchResponse search(@RequestParam(required = true) String query) {
 		var articles = repository.findByArticleContainsIgnoreCase(query);
 

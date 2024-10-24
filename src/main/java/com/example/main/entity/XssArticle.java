@@ -1,32 +1,35 @@
 package com.example.main.entity;
 
-import javax.persistence.*;
+
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 @Entity
 public class XssArticle {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
 
-    @Column
-    private String title;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private long articleId;
 
-    public XssArticle() {
-    }
+	private String article;
 
-    public int getId() {
-        return id;
-    }
+	public long getArticleId() {
+		return articleId;
+	}
 
-    public void setId(int id) {
-        this.id = id;
-    }
+	public void setArticleId(long articleId) {
+		this.articleId = articleId;
+	}
 
-    public String getTitle() {
-        return title;
-    }
+	public String getArticle() {
+		return article;
+	}
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
+	public void setArticle(String article) {
+		this.article = article;
+	}
+
 }

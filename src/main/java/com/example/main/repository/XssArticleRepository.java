@@ -7,9 +7,8 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface XssArticleRepository extends CrudRepository<XssArticle, Integer> {
+public interface XssArticleRepository extends CrudRepository<XssArticle, Long> {
 
-    public List<XssArticle> findByTitleContainsIgnoreCase(String title);
-
+     List<XssArticle> findByArticleContainsIgnoreCase(String article);
 
 }

@@ -22,19 +22,21 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 //@Component
-public class SqlInjectionFilter extends OncePerRequestFilter {
+public class XssRequestFilter extends OncePerRequestFilter {
 
-	private static final String[] SQL_REGEX = { "(?i)(.*)(\\b)+SELECT(\\b)+\\s.*(\\b)+FROM(\\b)+\\s.*(.*)",
-			"(?i)(.*)(\\b)+DROP(\\b)+\\s.*(.*)" };
+	private static final String[] XSS_REGEX = {
+			"onclick|onkeypress|onkeydown|onkeyup|onerror|onchange|onmouseover|onmouseout|onblur|onselect|onfocus",
+			"<\s*script\b[^>]*>(.*?)<\s*/script\b[^>]*>", "script\s+src\s*=", "<\s*script\b[^>]*>",
+			"<\s*/script\b[^>]*>", "javascript.*:" };
 
-	private List<Pattern> sqlValidationPatterns;
+	private List<Pattern> xssValidationPatterns;
 
-	public SqlInjectionFilter() {
-		sqlValidationPatterns = new ArrayList<Pattern>();
+	public XssRequestFilter() {
+		xssValidationPatterns = new ArrayList<Pattern>();
 
-		for (String sqlStatement : SQL_REGEX) {
-			var pattern = Pattern.compile(sqlStatement, Pattern.CASE_INSENSITIVE);
-			sqlValidationPatterns.add(pattern);
+		for (String xssScript : XSS_REGEX) {
+			var pattern = Pattern.compile(xssScript, Pattern.CASE_INSENSITIVE);
+			xssValidationPatterns.add(pattern);
 		}
 	}
 
@@ -51,23 +53,23 @@ public class SqlInjectionFilter extends OncePerRequestFilter {
 				StandardCharsets.UTF_8);
 		var requestBody = IOUtils.toString(cachedHttpRequest.getReader()).replaceAll("\\r\\n|\\r|\\n", "");
 
-		if (isSqlInjectionSafe(queryString) && isSqlInjectionSafe(pathVariables) && isSqlInjectionSafe(requestBody)) {
+		if (isXssSafe(queryString) && isXssSafe(pathVariables) && isXssSafe(requestBody)) {
 			chain.doFilter(cachedHttpRequest, response);
 		} else {
 			response.setStatus(HttpStatus.BAD_REQUEST.value());
 			response.setContentType(MediaType.APPLICATION_JSON_VALUE);
 			PrintWriter writer = response.getWriter();
-			writer.print("{\"message\":\"SQL injection detected\"}");
+			writer.print("{\"message\":\"XSS detected\"}");
 			return;
 		}
 	}
 
-	private boolean isSqlInjectionSafe(String stringToValidate) {
+	private boolean isXssSafe(String stringToValidate) {
 		if (StringUtils.isBlank(stringToValidate)) {
 			return true;
 		}
 
-		for (var pattern : sqlValidationPatterns) {
+		for (var pattern : xssValidationPatterns) {
 			if (pattern.matcher(stringToValidate).find()) {
 				return false;
 			}
