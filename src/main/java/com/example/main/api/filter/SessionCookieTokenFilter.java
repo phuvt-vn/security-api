@@ -31,10 +31,11 @@ public class SessionCookieTokenFilter extends OncePerRequestFilter {
         }
     }
 
-    private boolean isValidSessionCookie(HttpServletRequest httpServletRequest) {
-        var token = sessionCookieTokenService.read(httpServletRequest);
+    private boolean isValidSessionCookie(HttpServletRequest request) {
+        var providedTokenId = request.getHeader("X-CSRF");
+        var token = sessionCookieTokenService.read(request, providedTokenId);
         if(token.isPresent()){
-            httpServletRequest.setAttribute(SessionCookieConstant.REQUEST_ATTRIBUTE_USERNAME,token.get().getUsername());
+            request.setAttribute(SessionCookieConstant.REQUEST_ATTRIBUTE_USERNAME,token.get().getUsername());
             return true;
         }
         return false;

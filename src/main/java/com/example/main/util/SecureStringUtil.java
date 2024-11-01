@@ -31,8 +31,10 @@ public class SecureStringUtil {
 		return sb.toString();
 	}
 
-	public static boolean equals(String string, String otherString) {
-		return MessageDigest.isEqual(string.getBytes(Charsets.UTF_8), otherString.getBytes(Charsets.UTF_8));
+
+
+	public static boolean equals(String first, String second){
+		return MessageDigest.isEqual(first.getBytes(Charsets.UTF_8), second.getBytes(Charsets.UTF_8));
 	}
 
 }

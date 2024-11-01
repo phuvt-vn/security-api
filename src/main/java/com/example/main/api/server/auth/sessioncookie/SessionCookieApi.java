@@ -26,8 +26,8 @@ public class SessionCookieApi {
         var token = new SessionCookieToken();
         token.setUsername(encryptUsername);
 
-        sessionCookieTokenService.store(request, token);
-        return "Logged in";
+        var JSessionId = sessionCookieTokenService.store(request, token);
+        return JSessionId;
     }
 
     @GetMapping(value="/time", produces = MediaType.TEXT_PLAIN_VALUE)
