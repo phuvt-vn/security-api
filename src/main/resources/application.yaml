@@ -22,3 +22,7 @@ server:
     key-store-password: 123456
     key-alias: apisecurity
     enabled: false
+  servlet:
+    session:
+      cookie:
+        max-age: 15m
