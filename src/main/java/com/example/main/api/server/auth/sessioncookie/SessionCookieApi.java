@@ -5,10 +5,7 @@ import com.example.main.entity.SessionCookieToken;
 import com.example.main.service.SessionCookieTokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalTime;
@@ -35,6 +32,12 @@ public class SessionCookieApi {
         var encryptedUsername = request.getAttribute(SessionCookieConstant.REQUEST_ATTRIBUTE_USERNAME);
 
         return "Now is: "+ LocalTime.now() + ", access by: "+ encryptedUsername;
+    }
+
+    @DeleteMapping(value = "/logout", produces = MediaType.TEXT_PLAIN_VALUE)
+    public String logout (HttpServletRequest request) {
+        sessionCookieTokenService.delete(request);
+        return "Logged out";
     }
 
 }

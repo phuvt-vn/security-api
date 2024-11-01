@@ -32,6 +32,7 @@ public class SessionCookieFilterConfig {
         var registrationBean = new FilterRegistrationBean<SessionCookieTokenFilter>();
         registrationBean.setFilter(new SessionCookieTokenFilter(sessionCookieTokenService));
         registrationBean.addUrlPatterns("/api/auth/session-cookie/v1/time");
+        registrationBean.addUrlPatterns("/api/auth/session-cookie/v1/logout");
         return registrationBean;
     }
 }

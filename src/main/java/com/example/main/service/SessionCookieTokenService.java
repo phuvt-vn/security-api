@@ -52,8 +52,10 @@ public class SessionCookieTokenService {
             e.printStackTrace();
             return Optional.empty();
         }
-
-
     }
 
+    public void delete(HttpServletRequest request){
+        var session = request.getSession(false);
+        session.invalidate();
+    }
 }
