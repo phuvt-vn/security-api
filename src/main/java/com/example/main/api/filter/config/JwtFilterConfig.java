@@ -11,13 +11,13 @@ import org.springframework.context.annotation.Configuration;
 
 
 
-@Configuration
+//@Configuration
 public class JwtFilterConfig {
 
-	@Autowired
+	//@Autowired
 	private BasicAuthRepository basicAuthUserRepository;
 
-	@Autowired
+	//@Autowired
 	private JwtService jwtService;
 
 	@Bean
